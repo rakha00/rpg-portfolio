@@ -1,0 +1,29 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const allProjects = await getCollection("projects");
+  return allProjects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+
+const { Content } = await project.render();
+---
+
+<MainLayout title={project.data.title}>
+  <a href="/projects/"> &lt;-- Kembali ke Quest Log</a>
+  <h1>{project.data.title}</h1>
+  <p>Tanggal Selesai: {project.data.publishDate.toDateString()}</p>
+  <div>
+    Tags:
+    {project.data.tags.map((tag) => <span>{tag}</span>)}
+  </div>
+  <hr />
+
+  <Content />
+</MainLayout>
