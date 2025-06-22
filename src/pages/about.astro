@@ -3,6 +3,37 @@ import MainLayout from "../layouts/MainLayout.astro";
 ---
 
 <MainLayout title="About Me - RPG Portfolio">
-  <h1>Character Profile</h1>
-  <p>Ini adalah halaman Tentang Saya.</p>
+  <div class="container mx-auto p-4 md:p-8">
+    <h1 class="text-3xl md:text-4xl text-center mb-8 text-yellow-300">
+      The Village of Beginnings
+    </h1>
+
+    <div
+      class="max-w-4xl mx-auto bg-gray-800 border-2 border-gray-600 rounded-lg p-8"
+    >
+      <div class="flex flex-col md:flex-row items-center gap-8">
+        <div
+          class="w-48 h-48 bg-gray-700 border-4 border-gray-500 rounded-full flex-shrink-0"
+        >
+          <img
+            src="/images/avatar.png"
+            alt="Pixel art avatar of the site owner"
+            class="w-48 h-48 border-4 border-gray-500 rounded-full flex-shrink-0 object-cover"
+          />
+        </div>
+
+        <div>
+          <h2 class="text-3xl text-white">Rakhadinar Jaladara</h2>
+          <p class="text-yellow-400 text-lg mb-4">Level 5 Web Developer</p>
+
+          <p class="text-gray-300 leading-relaxed">
+            This is my character's backstory. A passionate developer who started
+            his journey in this humble village. With a love for clean code and
+            creative solutions, I venture into the digital world to build
+            amazing things and conquer challenging quests (projects).
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 </MainLayout>

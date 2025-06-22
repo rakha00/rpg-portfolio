@@ -1,17 +1,223 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+import SoundLink from "../components/SoundLink.astro";
 ---
 
-<MainLayout title="Home - RPG Portfolio">
-  <div
-    class="h-screen w-full flex flex-col items-center justify-center bg-cover bg-center"
-    style="background-image: url('/images/world-map.png');"
-  >
-    <div class="text-center bg-black bg-opacity-70 p-8 rounded-lg">
-      <h1 class="text-4xl md:text-6xl text-white mb-4">
-        Rakhadinar Jaladara's Portfolio
-      </h1>
-      <p class="text-lg md:text-xl text-yellow-300">The Adventure Begins!</p>
+<MainLayout title="Home - Rakhadinar's Portfolio">
+  <div id="simple-nav" class="md:hidden">
+    <img
+      src="/images/world-map.png"
+      alt="World Map Banner"
+      class="w-full h-auto"
+    />
+    <div class="p-8 text-center">
+      <h1 class="text-3xl text-white mb-4">Rakhadinar's Portfolio</h1>
+      <p class="text-lg text-yellow-300 mb-8">The Adventure Begins!</p>
+      <div class="flex flex-col space-y-4">
+        <SoundLink
+          href="/about"
+          class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-4 rounded-lg"
+          >Enter The Village (About)</SoundLink
+        >
+        <SoundLink
+          href="/skills"
+          class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-4 rounded-lg"
+          >Explore The Forest (Skills)</SoundLink
+        >
+        <SoundLink
+          href="/projects"
+          class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-4 rounded-lg"
+          >Visit The Castle (Projects)</SoundLink
+        >
+        <SoundLink
+          href="/contact"
+          class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-4 rounded-lg"
+          >Travel to The Harbor (Contact)</SoundLink
+        >
+      </div>
     </div>
   </div>
+
+  <div
+    id="immersive-exp"
+    class="hidden md:block relative h-screen w-full overflow-hidden"
+  >
+    <img
+      src="/images/world-map.png"
+      alt="An illustrated world map of the portfolio"
+      class="absolute inset-0 w-full h-full object-cover"
+    />
+
+    <svg
+      id="map-links"
+      class="absolute inset-0 w-full h-full opacity-0 pointer-events-none transition-opacity duration-1000"
+      viewBox="0 0 1920 1080"
+      preserveAspectRatio="xMidYMid slice"
+    >
+      <a
+        href="/about"
+        aria-label="Go to About page"
+        class="map-link"
+        data-sound-link="true"
+      >
+        <circle cx="282" cy="453" r="100" class="map-hotspot"></circle>
+        <text x="282" y="453" class="map-label">About Me</text>
+      </a>
+      <a
+        href="/skills"
+        aria-label="Go to Skills page"
+        class="map-link"
+        data-sound-link="true"
+      >
+        <rect x="600" y="420" width="350" height="250" class="map-hotspot"
+        ></rect>
+        <text x="775" y="545" class="map-label">Skills</text>
+      </a>
+      <a
+        href="/projects"
+        aria-label="Go to Projects page"
+        class="map-link"
+        data-sound-link="true"
+      >
+        <rect x="1440" y="250" width="300" height="250" class="map-hotspot"
+        ></rect>
+        <text x="1590" y="375" class="map-label">Projects</text>
+      </a>
+      <a
+        href="/contact"
+        aria-label="Go to Contact page"
+        class="map-link"
+        data-sound-link="true"
+      >
+        <circle cx="1580" cy="790" r="120" class="map-hotspot"></circle>
+        <text x="1580" y="790" class="map-label">Contact</text>
+      </a>
+    </svg>
+
+    <div
+      id="hud"
+      class="absolute top-5 left-5 bg-black/60 p-4 rounded-lg border-2 border-gray-600 text-white opacity-0 transition-opacity duration-1000"
+    >
+      <p><span class="text-yellow-400">Adventurer:</span> Rakhadinar</p>
+      <p><span class="text-yellow-400">Location:</span> World Map</p>
+      <p class="mt-2 italic text-gray-400">
+        Select a destination to explore...
+      </p>
+    </div>
+
+    <div
+      id="start-screen"
+      class="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 transition-opacity duration-1000"
+    >
+      <h1 class="text-6xl text-white mb-4">Rakhadinar's Portfolio</h1>
+      <p class="text-xl text-yellow-300 mb-8">The Adventure Begins!</p>
+      <button
+        id="start-button"
+        class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-4 px-10 rounded-lg text-2xl transition-all duration-300 hover:scale-110"
+      >
+        Start Game
+      </button>
+    </div>
+  </div>
+
+  <style>
+    .map-hotspot {
+      fill: transparent;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+    }
+    .map-link:hover .map-hotspot {
+      fill: rgba(255, 255, 255, 0.2);
+      stroke: #facc15;
+      stroke-width: 4px;
+    }
+    .map-label {
+      font-family: "Press Start 2P", system-ui;
+      font-size: 28px;
+      fill: white;
+      text-anchor: middle;
+      dominant-baseline: middle;
+      pointer-events: none;
+      opacity: 1;
+      stroke: black;
+      stroke-width: 6px;
+      paint-order: stroke;
+    }
+  </style>
+
+  <script>
+    function checkAspectRatioAndToggleView() {
+      const simpleNav = document.getElementById("simple-nav");
+      const immersiveExp = document.getElementById("immersive-exp");
+      if (!simpleNav || !immersiveExp) return;
+      const idealRatio = 16 / 9;
+      const screenRatio = window.innerWidth / window.innerHeight;
+      const tolerance = 0.4;
+      const isIdealRatio = Math.abs(screenRatio - idealRatio) < tolerance;
+      const isMobile = window.innerWidth < 768;
+      if (isMobile || !isIdealRatio) {
+        simpleNav.style.display = "block";
+        immersiveExp.style.display = "none";
+      } else {
+        simpleNav.style.display = "none";
+        immersiveExp.style.display = "block";
+      }
+    }
+
+    function debounce<T extends (...args: any[]) => any>(
+      func: T,
+      wait: number
+    ) {
+      let timeout: ReturnType<typeof setTimeout>;
+      return function executedFunction(...args: Parameters<T>) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
+
+    function setupHomepage() {
+      const startScreen = document.getElementById("start-screen");
+      const startButton = document.getElementById("start-button");
+      const mapLinks = document.getElementById("map-links");
+      const hud = document.getElementById("hud");
+      if (!startButton || !startScreen || !mapLinks || !hud) {
+        checkAspectRatioAndToggleView();
+        return;
+      }
+      const showImmersiveContent = () => {
+        startScreen.style.display = "none";
+        mapLinks.classList.remove("opacity-0", "pointer-events-none");
+        mapLinks.classList.add("opacity-100");
+        hud.classList.remove("opacity-0");
+        hud.classList.add("opacity-100");
+      };
+      if (sessionStorage.getItem("gameHasStarted") === "true") {
+        showImmersiveContent();
+        checkAspectRatioAndToggleView();
+        return;
+      }
+      const handleStartClick = () => {
+        sessionStorage.setItem("gameHasStarted", "true");
+        showImmersiveContent();
+      };
+      startScreen.style.display = "flex";
+      mapLinks.classList.add("opacity-0", "pointer-events-none");
+      mapLinks.classList.remove("opacity-100");
+      hud.classList.add("opacity-0");
+      hud.classList.remove("opacity-100");
+      startButton.removeEventListener("click", handleStartClick);
+      startButton.addEventListener("click", handleStartClick);
+      checkAspectRatioAndToggleView();
+    }
+    document.addEventListener("astro:page-load", setupHomepage);
+    window.addEventListener(
+      "resize",
+      debounce(checkAspectRatioAndToggleView, 250)
+    );
+    setupHomepage();
+  </script>
 </MainLayout>

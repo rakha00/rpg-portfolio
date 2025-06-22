@@ -12,7 +12,9 @@ allProjects.sort(
 
 <MainLayout title="Projects - RPG Portfolio">
   <div class="container mx-auto p-4 md:p-8">
-    <h1 class="text-4xl text-center mb-8 text-yellow-300">Quest Log</h1>
+    <h1 class="text-3xl md:text-4xl text-center mb-8 text-yellow-300">
+      Quest Log
+    </h1>
     <p class="text-center mb-12">
       Berikut adalah daftar misi yang telah saya selesaikan.
     </p>
@@ -22,7 +24,7 @@ allProjects.sort(
         allProjects.map((project) => (
           <a
             href={`/projects/${project.slug}/`}
-            class="block p-6 bg-gray-800 border-2 border-gray-600 rounded-lg hover:bg-gray-700 hover:border-yellow-400 transition-all duration-300"
+            class="block p-6 bg-gray-800 border-2 border-gray-600 rounded-lg hover:bg-gray-700 hover:border-yellow-400 transition-all duration-300 hover:scale-105 hover:-translate-y-1"
           >
             <h2 class="text-2xl mb-2 text-white">{project.data.title}</h2>
             <p class="text-gray-400 mb-4">{project.data.description}</p>
