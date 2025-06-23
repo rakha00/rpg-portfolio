@@ -25,6 +25,10 @@ const { title } = Astro.props;
       href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
 
     <ClientRouter />
   </head>
@@ -34,7 +38,7 @@ const { title } = Astro.props;
       class="bg-gray-900 border-b-2 border-gray-700 relative z-50"
     >
       <nav
-        class="container mx-auto flex flex-col md:flex-row justify-center items-center p-4"
+        class="container mx-auto flex flex-row flex-wrap justify-center items-center p-4 gap-x-2"
       >
         <a
           href="/"
@@ -109,14 +113,6 @@ const { title } = Astro.props;
         }
       }
 
-      function handleBGM() {
-        const bgm = document.getElementById("bgm") as HTMLAudioElement;
-        if (bgm && bgm.paused) {
-          bgm.play().catch((e) => {});
-        }
-        document.body.removeEventListener("click", handleBGM);
-      }
-
       function handleMuteButton() {
         const button = document.getElementById("mute-button");
         const icon = document.getElementById("mute-icon") as HTMLImageElement;
@@ -136,6 +132,12 @@ const { title } = Astro.props;
         button.onclick = () => {
           isMuted = !isMuted;
           updateMuteState();
+          // Attempt to play BGM immediately after unmuting if it's not playing
+          if (!isMuted && bgm.paused) {
+            bgm.play().catch((e: any) => {
+              console.error("Error playing BGM after unmuting:", e);
+            });
+          }
         };
 
         updateMuteState();
@@ -151,13 +153,25 @@ const { title } = Astro.props;
       function runGlobalScripts() {
         handleHeaderVisibility();
         handleMuteButton();
+
+        // Attempt to play BGM on page load if not muted and not playing
+        const bgm = document.getElementById("bgm") as HTMLAudioElement;
+        if (bgm && !bgm.muted && bgm.paused) {
+          bgm.play().catch((e: any) => {
+            // Autoplay might be blocked, user interaction will be needed
+            console.warn(
+              "Autoplay blocked or error playing BGM on page load:",
+              e
+            );
+          });
+        }
       }
 
       // Setup that runs only once per full page load
       if (!(window as any).audioInitialized) {
         document.addEventListener("click", handleSoundEvents);
         document.addEventListener("mouseenter", handleSoundEvents, true);
-        document.body.addEventListener("click", handleBGM, { once: true });
+        // Removed the one-time click listener for BGM
         (window as any).audioInitialized = true;
       }
 
