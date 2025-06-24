@@ -4,45 +4,200 @@ import MainLayout from "../layouts/MainLayout.astro";
 const skillCategories = [
   {
     name: "Languages",
-    skills: ["JavaScript", "TypeScript", "HTML5", "CSS3", "SQL"],
+    skills: [
+      {
+        name: "PHP",
+        icon: "php.svg",
+        description:
+          "A widely-used open source scripting language especially suited for web development.",
+      },
+      {
+        name: "JavaScript",
+        icon: "javascript.svg",
+        description:
+          "The language of the web, used for dynamic and interactive user experiences.",
+      },
+      // {
+      //   name: "TypeScript",
+      //   icon: "typescript.svg",
+      //   description:
+      //     "A superset of JavaScript that adds static typing for more robust code.",
+      // },
+      {
+        name: "Python",
+        icon: "python.svg",
+        description:
+          "A versatile high-level language known for its readability and extensive libraries.",
+      },
+      {
+        name: "SQL",
+        icon: "sql.svg",
+        description:
+          "A standard language for storing, manipulating and retrieving data in databases.",
+      },
+      {
+        name: "HTML5",
+        icon: "html5.svg",
+        description:
+          "The standard markup language for documents designed to be displayed in a web browser.",
+      },
+      {
+        name: "CSS3",
+        icon: "css3.svg",
+        description:
+          "The language for describing the presentation of a document written in HTML.",
+      },
+    ],
   },
   {
     name: "Frameworks / Libraries",
-    skills: ["Node.js", "Express", "Astro", "React", "Tailwind CSS"],
+    skills: [
+      {
+        name: "Node.js",
+        icon: "nodejs.svg",
+        description:
+          "A back-end JavaScript runtime environment that runs on the V8 engine.",
+      },
+      {
+        name: "Laravel",
+        icon: "laravel.svg",
+        description:
+          "A popular PHP framework with an expressive, elegant syntax.",
+      },
+      {
+        name: "Express",
+        icon: "express.svg",
+        description:
+          "A minimal and flexible Node.js web application framework.",
+      },
+      {
+        name: "React",
+        icon: "react.svg",
+        description:
+          "A JavaScript library for building user interfaces or UI components.",
+      },
+      {
+        name: "Astro",
+        icon: "astro.svg",
+        description:
+          "The web framework for building fast, content-focused websites.",
+      },
+      {
+        name: "Tailwind CSS",
+        icon: "tailwindcss.svg",
+        description:
+          "A utility-first CSS framework for rapidly building custom user interfaces.",
+      },
+    ],
   },
   {
     name: "Tools & Platforms",
-    skills: ["Git", "GitHub", "Docker", "Vercel", "Postman"],
+    skills: [
+      {
+        name: "Git",
+        icon: "git.svg",
+        description:
+          "A distributed version control system for tracking changes in source code.",
+      },
+      {
+        name: "GitHub",
+        icon: "github.svg",
+        description:
+          "A provider of Internet hosting for software development and version control using Git.",
+      },
+      {
+        name: "Docker",
+        icon: "docker.svg",
+        description:
+          "A set of PaaS products that use OS-level virtualization to deliver software in packages.",
+      },
+      {
+        name: "Vercel",
+        icon: "vercel.svg",
+        description:
+          "A cloud platform for static sites and Serverless Functions that fits perfectly with Astro.",
+      },
+      {
+        name: "Postman",
+        icon: "postman.svg",
+        description: "An API platform for building and using APIs.",
+      },
+      // --- Databases are now here ---
+      {
+        name: "MySQL",
+        icon: "mysql.svg",
+        description:
+          "The world's most popular open source relational database management system.",
+      },
+      {
+        name: "PostgreSQL",
+        icon: "postgresql.svg",
+        description:
+          "A powerful, open source object-relational database system.",
+      },
+      {
+        name: "MongoDB",
+        icon: "mongodb.svg",
+        description:
+          "A source-available cross-platform document-oriented NoSQL database program.",
+      },
+    ],
   },
 ];
 ---
 
 <MainLayout title="Skills - RPG Portfolio">
-  <div class="container mx-auto p-4 md:p-8">
-    <h1 class="text-3xl md:text-4xl text-center mb-8 text-yellow-300">
-      The Forest of Skills
-    </h1>
-    <p class="text-center mb-12">
-      Sacred arts discovered deep within the mystical forest.
-    </p>
+  <div
+    class="min-h-screen w-full bg-cover bg-center flex items-center justify-center p-4"
+    style="background-image: url('/images/forest-bg.png');"
+  >
+    <div class="container mx-auto">
+      <h1
+        class="font-heading text-3xl md:text-4xl text-center mb-8 text-white"
+        style="text-shadow: 2px 2px 4px #000;"
+      >
+        The Forest of Skills
+      </h1>
+      <p
+        class="text-center mb-12 max-w-2xl mx-auto text-gray-200"
+        style="text-shadow: 1px 1px 2px #000;"
+      >
+        Sacred arts discovered deep within the mystical forest, each one a
+        testament to countless hours of study and practice.
+      </p>
 
-    <div class="max-w-5xl mx-auto space-y-12">
-      {
-        skillCategories.map((category) => (
-          <div>
-            <h2 class="text-2xl text-white border-b-2 border-gray-600 pb-2 mb-6">
-              {category.name}
-            </h2>
-            <div class="flex flex-wrap gap-4">
-              {category.skills.map((skill) => (
-                <div class="bg-gray-700 border border-gray-500 rounded-md px-4 py-2 text-lg text-gray-200 hover:bg-gray-600 hover:text-white transition-colors">
-                  {skill}
-                </div>
-              ))}
+      <div class="max-w-5xl mx-auto space-y-12">
+        {
+          skillCategories.map((category) => (
+            <div class="bg-gray-800/80 backdrop-blur-sm border-2 border-gray-600 rounded-lg p-6">
+              <h2 class="font-heading text-2xl text-white border-b-2 border-gray-500 pb-2 mb-6">
+                {category.name}
+              </h2>
+              <div class="flex flex-wrap gap-4">
+                {category.skills.map((skill) => (
+                  <div class="relative group flex items-center gap-3 bg-gray-700/90 border border-gray-500 rounded-md px-4 py-2 text-lg text-gray-200 hover:bg-gray-600 hover:text-white transition-colors cursor-pointer">
+                    <img
+                      src={`/icons/skills/${skill.icon}`}
+                      alt={`${skill.name} icon`}
+                      class="w-6 h-6"
+                    />
+                    <span>{skill.name}</span>
+
+                    {/* This is the Tooltip */}
+                    <div
+                      class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-72 p-3 bg-gray-900 text-sm text-gray-300 rounded-lg shadow-lg
+                                              opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                    >
+                      {skill.description}
+                      <div class="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-x-8 border-x-transparent border-t-8 border-t-gray-900" />
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        ))
-      }
+          ))
+        }
+      </div>
     </div>
   </div>
 </MainLayout>

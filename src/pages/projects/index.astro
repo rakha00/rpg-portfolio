@@ -1,43 +1,55 @@
 ---
+// src/pages/projects/index.astro
 import MainLayout from "../../layouts/MainLayout.astro";
 import { getCollection } from "astro:content";
 
-const allProjects = await getCollection("projects", ({ data }) => {
-  return data.publishDate;
-});
+const allProjects = await getCollection("projects");
 allProjects.sort(
   (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
 );
 ---
 
 <MainLayout title="Projects - RPG Portfolio">
-  <div class="container mx-auto p-4 md:p-8">
-    <h1 class="text-3xl md:text-4xl text-center mb-8 text-yellow-300">
-      Quest Log
-    </h1>
-    <p class="text-center mb-12">
-      Berikut adalah daftar misi yang telah saya selesaikan.
-    </p>
+  <div
+    class="min-h-screen w-full bg-cover bg-center flex items-center justify-center p-4"
+    style="background-image: url('/images/castle-bg.png');"
+  >
+    <div class="container mx-auto">
+      <h1
+        class="font-heading text-3xl md:text-4xl text-center mb-8 text-white"
+        style="text-shadow: 2px 2px 4px #000;"
+      >
+        The Castle of Achievements
+      </h1>
+      <p
+        class="text-center mb-12 max-w-2xl mx-auto text-gray-200"
+        style="text-shadow: 1px 1px 2px #000;"
+      >
+        A hall of conquered quests and powerful artifacts forged with code.
+      </p>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      {
-        allProjects.map((project) => (
-          <a
-            href={`/projects/${project.slug}/`}
-            class="block p-6 bg-gray-800 border-2 border-gray-600 rounded-lg hover:bg-gray-700 hover:border-yellow-400 transition-all duration-300 hover:scale-105 hover:-translate-y-1"
-          >
-            <h2 class="text-2xl mb-2 text-white">{project.data.title}</h2>
-            <p class="text-gray-400 mb-4">{project.data.description}</p>
-            <div class="flex flex-wrap gap-2">
-              {project.data.tags.map((tag) => (
-                <span class="text-xs bg-gray-600 text-yellow-300 px-2 py-1 rounded">
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </a>
-        ))
-      }
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {
+          allProjects.map((project) => (
+            <a
+              href={`/projects/${project.slug}/`}
+              class="block p-6 bg-gray-800/80 backdrop-blur-sm border-2 border-gray-600 rounded-lg hover:bg-gray-700/90 hover:border-yellow-400 transition-all duration-300"
+            >
+              <h2 class="font-heading text-2xl mb-2 text-white">
+                {project.data.title}
+              </h2>
+              <p class="text-gray-300 mb-4">{project.data.description}</p>
+              <div class="flex flex-wrap gap-2">
+                {project.data.tags.map((tag) => (
+                  <span class="text-xs bg-gray-600 text-yellow-300 px-2 py-1 rounded">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </a>
+          ))
+        }
+      </div>
     </div>
   </div>
 </MainLayout>
