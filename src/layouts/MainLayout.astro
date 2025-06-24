@@ -6,7 +6,6 @@ import MuteButton from "../components/MuteButton.astro";
 export interface Props {
   title: string;
 }
-const { title } = Astro.props;
 ---
 
 <!doctype html>
@@ -17,16 +16,12 @@ const { title } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+    <title>{Astro.props.title}</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
       rel="stylesheet"
     />
 
@@ -80,104 +75,113 @@ const { title } = Astro.props;
     <audio id="bgm" src="/sounds/bgm.mp3" loop transition:persist></audio>
     <MuteButton transition:persist />
 
-    <script>
-      // This single, global script controls everything.
-      const hoverSound = new Audio("/sounds/hover.mp3");
-      const clickSound = new Audio("/sounds/click.mp3");
-      hoverSound.volume = 0.3;
-      clickSound.volume = 0.5;
+    <script is:inline>
+      if (!window.appInitialized) {
+        window.isMuted = localStorage.getItem("isMuted") === "true";
 
-      function playSound(sound: HTMLAudioElement) {
-        if (localStorage.getItem("isMuted") === "true") return;
-        sound.currentTime = 0;
-        sound.play().catch((e: any) => {});
-      }
+        const bgm = document.getElementById("bgm");
+        const muteButton = document.getElementById("mute-button");
+        const muteIcon = document.getElementById("mute-icon");
 
-      function handleSoundEvents(event: MouseEvent) {
-        const target = event.target as Element;
-        const link = target.closest('a[data-sound-link="true"]');
+        const sfx = {
+          hover: new Audio("/sounds/hover.mp3"),
+          click: new Audio("/sounds/click.mp3"),
+        };
+        sfx.hover.volume = 0.3;
+        sfx.click.volume = 0.5;
+        if (bgm) bgm.volume = 0.2;
 
-        if (!link) return;
-
-        if (event.type === "mouseenter") {
-          playSound(hoverSound);
-        } else if (event.type === "click") {
-          event.preventDefault();
-          const destination = link.getAttribute("href");
-          playSound(clickSound);
-          if (destination) {
-            setTimeout(() => {
-              window.location.href = destination;
-            }, 200);
-          }
-        }
-      }
-
-      function handleMuteButton() {
-        const button = document.getElementById("mute-button");
-        const icon = document.getElementById("mute-icon") as HTMLImageElement;
-        const bgm = document.getElementById("bgm") as HTMLAudioElement;
-        if (!button || !icon || !bgm) return;
-
-        let isMuted = localStorage.getItem("isMuted") === "true";
-
-        const updateMuteState = () => {
-          icon.src = isMuted
+        function updateMuteState() {
+          if (!muteIcon) return;
+          // Mute/unmute the BGM
+          if (bgm) bgm.muted = window.isMuted;
+          // Update icon
+          muteIcon.src = window.isMuted
             ? "/icons/speaker-off.svg"
             : "/icons/speaker-on.svg";
-          bgm.muted = isMuted;
-          localStorage.setItem("isMuted", String(isMuted));
-        };
+          // Save preference
+          localStorage.setItem("isMuted", String(window.isMuted));
+        }
 
-        button.onclick = () => {
-          isMuted = !isMuted;
-          updateMuteState();
-          // Attempt to play BGM immediately after unmuting if it's not playing
-          if (!isMuted && bgm.paused) {
-            bgm.play().catch((e: any) => {
-              console.error("Error playing BGM after unmuting:", e);
-            });
-          }
-        };
+        function playSfx(sound) {
+          if (window.isMuted) return;
+          sound.currentTime = 0;
+          sound.play().catch((e) => {});
+        }
 
+        // Initial setup
         updateMuteState();
-      }
 
-      function handleHeaderVisibility() {
-        const header = document.getElementById("main-header");
-        if (!header) return;
-        header.style.display =
-          window.location.pathname === "/" ? "none" : "block";
-      }
-
-      function runGlobalScripts() {
-        handleHeaderVisibility();
-        handleMuteButton();
-
-        // Attempt to play BGM on page load if not muted and not playing
-        const bgm = document.getElementById("bgm") as HTMLAudioElement;
-        if (bgm && !bgm.muted && bgm.paused) {
-          bgm.play().catch((e: any) => {
-            // Autoplay might be blocked, user interaction will be needed
-            console.warn(
-              "Autoplay blocked or error playing BGM on page load:",
-              e
-            );
+        // Mute Button listener
+        if (muteButton) {
+          muteButton.addEventListener("click", () => {
+            window.isMuted = !window.isMuted;
+            updateMuteState();
           });
+        }
+
+        if (bgm) {
+          document.body.addEventListener(
+            "click",
+            () => {
+              if (bgm.paused && !window.isMuted) {
+                bgm.play().catch((e) => {});
+              }
+            },
+            { once: true }
+          );
+        }
+
+        // Global SFX listeners
+        document.addEventListener("click", (e) => {
+          if (!(e.target instanceof Element)) return;
+          const link = e.target.closest('a[data-sound-link="true"]');
+          if (link) {
+            e.preventDefault();
+            playSfx(sfx.click);
+            const destination = link.getAttribute("href");
+            if (destination)
+              setTimeout(() => {
+                window.location.href = destination;
+              }, 200);
+          }
+        });
+
+        document.addEventListener(
+          "mouseenter",
+          (e) => {
+            if (!(e.target instanceof Element)) return;
+            if (e.target.closest('a[data-sound-link="true"]')) {
+              playSfx(sfx.hover);
+            }
+          },
+          true
+        );
+
+        window.appInitialized = true;
+      }
+
+      // This function handles UI updates that need to run on every page change.
+      function handlePageUI() {
+        // Header visibility
+        const header = document.getElementById("main-header");
+        if (header) {
+          header.style.display =
+            window.location.pathname === "/" ? "none" : "block";
+        }
+        // Ensure mute icon is correct after navigation
+        const muteIcon = document.getElementById("mute-icon");
+        if (muteIcon) {
+          muteIcon.src =
+            localStorage.getItem("isMuted") === "true"
+              ? "/icons/speaker-off.svg"
+              : "/icons/speaker-on.svg";
         }
       }
 
-      // Setup that runs only once per full page load
-      if (!(window as any).audioInitialized) {
-        document.addEventListener("click", handleSoundEvents);
-        document.addEventListener("mouseenter", handleSoundEvents, true);
-        // Removed the one-time click listener for BGM
-        (window as any).audioInitialized = true;
-      }
-
-      // Run these on every page transition
-      document.addEventListener("astro:page-load", runGlobalScripts);
-      runGlobalScripts();
+      document.addEventListener("astro:page-load", handlePageUI);
+      // Run on first load as well to set header correctly.
+      handlePageUI();
     </script>
   </body>
 </html>

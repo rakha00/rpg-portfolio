@@ -1,67 +1,81 @@
 ---
+// src/pages/contact.astro
 import MainLayout from "../layouts/MainLayout.astro";
 ---
 
 <MainLayout title="Contact - RPG Portfolio">
-  <div class="container mx-auto p-4 md:p-8">
-    <h1 class="text-4xl text-center mb-8 text-yellow-300">Contact Harbor</h1>
-    <p class="text-center mb-12">
-      Looking to hire a hero or start a new quest? Send a message by raven.
-    </p>
-
-    <div
-      class="max-w-2xl mx-auto bg-gray-800 border-2 border-gray-600 rounded-lg p-8"
-    >
-      <form
-        action="https://formspree.io/f/xdkzwnry"
-        method="POST"
-        class="space-y-6"
+  <div
+    class="min-h-screen w-full bg-cover bg-center flex items-center justify-center p-4"
+    style="background-image: url('/images/harbor-bg.png');"
+  >
+    <div class="container mx-auto">
+      <h1
+        class="font-heading text-3xl md:text-4xl text-center mb-8 text-white"
+        style="text-shadow: 2px 2px 4px #000;"
       >
-        <div>
-          <label for="name" class="block text-gray-300 mb-2"
-            >Your Name or Guild</label
-          >
-          <input
-            type="text"
-            name="name"
-            id="name"
-            required
-            class="w-full bg-gray-900 border border-gray-600 rounded-md p-2 text-white focus:ring-yellow-400 focus:border-yellow-400"
-          />
-        </div>
-        <div>
-          <label for="email" class="block text-gray-300 mb-2"
-            >Your Raven's Address (Email)</label
-          >
-          <input
-            type="email"
-            name="email"
-            id="email"
-            required
-            class="w-full bg-gray-900 border border-gray-600 rounded-md p-2 text-white focus:ring-yellow-400 focus:border-yellow-400"
-          />
-        </div>
-        <div>
-          <label for="message" class="block text-gray-300 mb-2"
-            >Your Quest Details (Message)</label
-          >
-          <textarea
-            name="message"
-            id="message"
-            rows="5"
-            required
-            class="w-full bg-gray-900 border border-gray-600 rounded-md p-2 text-white focus:ring-yellow-400 focus:border-yellow-400"
-          ></textarea>
-        </div>
-        <div>
-          <button
-            type="submit"
-            class="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-3 px-4 rounded-lg transition-colors"
-          >
-            Dispatch Raven
-          </button>
-        </div>
-      </form>
+        Contact Harbor
+      </h1>
+      <p
+        class="text-center mb-12 max-w-2xl mx-auto text-gray-200"
+        style="text-shadow: 1px 1px 2px #000;"
+      >
+        Looking to hire a hero or start a new quest? Send a message by raven.
+      </p>
+
+      <div
+        class="max-w-2xl mx-auto bg-gray-800/80 backdrop-blur-sm border-2 border-gray-600 rounded-lg p-8"
+      >
+        <form
+          action="https://formspree.io/f/YOUR_UNIQUE_CODE"
+          method="POST"
+          class="space-y-6"
+        >
+          <div>
+            <label for="name" class="block text-gray-300 mb-2"
+              >Your Name or Guild</label
+            >
+            <input
+              type="text"
+              name="name"
+              id="name"
+              required
+              class="w-full bg-gray-900 border border-gray-600 rounded-md p-2 text-white focus:ring-yellow-400 focus:border-yellow-400"
+            />
+          </div>
+          <div>
+            <label for="email" class="block text-gray-300 mb-2"
+              >Your Raven's Address (Email)</label
+            >
+            <input
+              type="email"
+              name="email"
+              id="email"
+              required
+              class="w-full bg-gray-900 border border-gray-600 rounded-md p-2 text-white focus:ring-yellow-400 focus:border-yellow-400"
+            />
+          </div>
+          <div>
+            <label for="message" class="block text-gray-300 mb-2"
+              >Your Quest Details (Message)</label
+            >
+            <textarea
+              name="message"
+              id="message"
+              rows="5"
+              required
+              class="w-full bg-gray-900 border border-gray-600 rounded-md p-2 text-white focus:ring-yellow-400 focus:border-yellow-400"
+            ></textarea>
+          </div>
+          <div>
+            <button
+              type="submit"
+              class="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-3 px-4 rounded-lg transition-colors font-heading"
+            >
+              Dispatch Raven
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </MainLayout>

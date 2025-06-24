@@ -1,10 +1,14 @@
 ---
-title: "Aplikasi REST API Node.js"
-description: "Merancang dan membangun sebuah REST API untuk aplikasi manajemen tugas."
-publishDate: "2024-12-15"
-tags: ["Backend", "Node.js", "Express"]
+title: "Website Portofolio RPG"
+description: "Membangun portofolio interaktif dengan konsep game RPG."
+publishDate: "2025-06-22"
+tags: ["Astro", "Frontend", "Game Dev"]
+image: "/images/world-map.png"
+siteUrl: ""
+repoUrl: "https://github.com/user/repo"
 ---
 
-Proyek ini fokus pada pengembangan sisi server. API ini memiliki fitur otentikasi pengguna, CRUD (Create, Read, Update, Delete) untuk tugas, dan dokumentasi API menggunakan Swagger.
+Ini adalah deskripsi detail tentang proyek. Di sini saya menghadapi tantangan A, dan menyelesaikannya dengan solusi B.
 
-Dibangun dengan arsitektur yang bersih dan _scalable_.
+- Fitur utama termasuk otentikasi pengguna.
+- Manajemen produk yang kompleks.

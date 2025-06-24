@@ -1,11 +1,14 @@
 ---
 title: "Website Portofolio RPG"
-description: "Membangun portofolio interaktif dengan konsep game RPG menggunakan Astro."
+description: "Membangun portofolio interaktif dengan konsep game RPG."
 publishDate: "2025-06-22"
 tags: ["Astro", "Frontend", "Game Dev"]
-image: "/images/rpg-portfolio.png"
+image: "/images/forest-bg.png"
+siteUrl: ""
+repoUrl: "https://github.com/user/repo"
 ---
 
-Ini adalah proyek untuk membangun portofolio pribadi saya dengan nuansa game. Tujuannya adalah untuk menunjukkan keahlian pengembangan web sambil memberikan pengalaman yang unik bagi pengunjung.
+Ini adalah deskripsi detail tentang proyek. Di sini saya menghadapi tantangan A, dan menyelesaikannya dengan solusi B.
 
-Tantangan utama adalah mengintegrasikan elemen game tanpa membuat website menjadi berat.
+- Fitur utama termasuk otentikasi pengguna.
+- Manajemen produk yang kompleks.

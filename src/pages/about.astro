@@ -1,16 +1,35 @@
 ---
 // src/pages/about.astro
 import MainLayout from "../layouts/MainLayout.astro";
+
+// Edit your social media links easily here
+const socialLinks = [
+  {
+    name: "GitHub",
+    url: "https://github.com/rakha00",
+    icon: "github.svg",
+  },
+  {
+    name: "LinkedIn",
+    url: "https://www.linkedin.com/in/rakhadinar-jaladara/",
+    icon: "linkedin.svg",
+  },
+  {
+    name: "Email",
+    url: "mailto:rkhdinar00@gmail.com",
+    icon: "email.svg",
+  },
+];
 ---
 
-<MainLayout title="About Me - Rakhadinar's Portofolio">
+<MainLayout title="About Me - Rakhadinar's Portfolio">
   <div
     class="min-h-screen w-full bg-cover bg-center flex items-center justify-center p-4"
     style="background-image: url('/images/village-bg.png');"
   >
     <div class="container mx-auto">
       <h1
-        class="text-3xl md:text-4xl text-center mb-8 text-white"
+        class="font-heading text-3xl md:text-4xl text-center mb-8 text-white"
         style="text-shadow: 2px 2px 4px #000;"
       >
         The Village of Beginnings
@@ -26,16 +45,43 @@ import MainLayout from "../layouts/MainLayout.astro";
             class="w-48 h-48 border-4 border-gray-500 rounded-full flex-shrink-0 object-cover"
           />
 
-          <div>
-            <h2 class="text-3xl text-white">Rakhadinar Jaladara</h2>
+          <div class="flex flex-col h-full">
+            <h2 class="font-heading text-3xl text-white">
+              Rakhadinar Jaladara
+            </h2>
             <p class="text-yellow-400 text-lg mb-4">Level 5 Web Developer</p>
 
-            <p class="text-gray-200 leading-relaxed font-sans text-2xl">
+            <p class="text-gray-200 leading-relaxed mb-6 font-sans text-2xl">
               A developer on a quest into the digital world. My focus is on
               backend development, crafting clean and powerful solutions. I
               leverage Artificial Intelligence as a force multiplier to
-              accelerate complex tasks and find innovative solutions.
+              accelerate complex tasks.
             </p>
+
+            <div class="mt-auto pt-4 border-t-2 border-gray-600">
+              <p class="font-heading text-lg text-yellow-300 mb-3">
+                Connect with me:
+              </p>
+              <div class="flex items-center gap-6">
+                {
+                  socialLinks.map((link) => (
+                    <a
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Visit my ${link.name}`}
+                      class="opacity-80 hover:opacity-100 hover:scale-110 transition-all duration-200"
+                    >
+                      <img
+                        src={`/icons/socials/${link.icon}`}
+                        alt={`${link.name} icon`}
+                        class="w-8 h-8"
+                      />
+                    </a>
+                  ))
+                }
+              </div>
+            </div>
           </div>
         </div>
       </div>
