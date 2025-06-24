@@ -34,13 +34,13 @@ const workExperiences = [
 
 <MainLayout title="Projects & Certifications - Rakhadinar's Portfolio">
   <div
-    class="min-h-screen w-full bg-cover bg-center p-4"
+    class="min-h-screen w-full bg-cover bg-center p-4 pt-20 md:pt-4"
     style="background-image: url('/images/castle-bg.png');"
   >
     <div class="container mx-auto py-12">
       <section class="mb-20">
         <h1
-          class="font-heading text-3xl md:text-4xl text-center mb-8 text-white"
+          class="font-heading text-2xl md:text-4xl text-center mb-8 text-white"
           style="text-shadow: 2px 2px 4px #000;"
         >
           The Castle of Achievements
@@ -57,7 +57,7 @@ const workExperiences = [
             allProjects.map(async (project) => {
               const { Content } = await project.render();
               return (
-                <div class="flex flex-col md:flex-row gap-8 bg-gray-800/80 backdrop-blur-sm border-2 border-gray-600 rounded-lg p-6">
+                <div class="flex flex-col md:flex-row gap-6 md:gap-8 bg-gray-800/80 backdrop-blur-sm border-2 border-gray-600 rounded-lg p-4 md:p-6">
                   <div class="md:w-1/3 flex-shrink-0">
                     {project.data.image && (
                       <img
@@ -67,7 +67,6 @@ const workExperiences = [
                       />
                     )}
                   </div>
-                  {/* Kolom Kanan: Detail */}
                   <div class="md:w-2/3">
                     <h2 class="font-heading text-2xl mb-2 text-white">
                       {project.data.title}
@@ -79,7 +78,7 @@ const workExperiences = [
                         </span>
                       ))}
                     </div>
-                    <div class="prose prose-invert prose-p:text-gray-300 prose-li:text-gray-300 max-w-none">
+                    <div class="prose prose-invert prose-p:text-gray-300 prose-li:text-gray-300 max-w-none font-sans text-lg md:text-xl">
                       <Content />
                     </div>
                     <div class="flex flex-wrap gap-4 mt-6">
@@ -122,7 +121,7 @@ const workExperiences = [
 
       <section class="mb-16">
         <h2
-          class="font-heading text-2xl md:text-3xl text-yellow-300 mb-8 text-center"
+          class="font-heading text-xl md:text-3xl text-yellow-300 mb-8 text-center"
           style="text-shadow: 1px 1px 2px #000;"
         >
           Certifications
@@ -134,18 +133,23 @@ const workExperiences = [
                 href={cert.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="block bg-gray-800/80 backdrop-blur-sm border-2 border-gray-600 rounded-lg p-6 hover:border-yellow-400 transition-colors"
+                class="block bg-gray-800/80 backdrop-blur-sm border-2 border-gray-600 rounded-lg p-4 md:p-6 hover:border-yellow-400 transition-colors"
               >
-                <div class="flex justify-between items-start">
-                  <h3 class="font-heading text-xl text-white">{cert.title}</h3>
-                  <span class="text-sm text-gray-400 flex-shrink-0 ml-4">
+                {/* FIX: This div is now responsive */}
+                <div class="flex flex-col sm:flex-row justify-between sm:items-start mb-1">
+                  <h3 class="font-heading text-xl text-white mb-1 sm:mb-0">
+                    {cert.title}
+                  </h3>
+                  <span class="text-sm text-gray-400 flex-shrink-0 sm:ml-4">
                     {cert.date}
                   </span>
                 </div>
                 <p class="text-yellow-400 text-sm mb-2">
                   Issued by: {cert.issuer}
                 </p>
-                <p class="text-gray-300">{cert.description}</p>
+                <p class="text-gray-300 font-sans text-lg md:text-xl">
+                  {cert.description}
+                </p>
               </a>
             ))
           }
@@ -154,7 +158,7 @@ const workExperiences = [
 
       <!-- <section>
         <h2
-          class="font-heading text-2xl md:text-3xl text-yellow-300 mb-8 text-center"
+          class="font-heading text-xl md:text-3xl text-yellow-300 mb-8 text-center"
           style="text-shadow: 1px 1px 2px #000;"
         >
           Work Experiences
@@ -162,10 +166,13 @@ const workExperiences = [
         <div class="max-w-4xl mx-auto space-y-6">
           {
             workExperiences.map((job) => (
-              <div class="bg-gray-800/80 backdrop-blur-sm border-2 border-gray-600 rounded-lg p-6">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2">
-                  <h3 class="font-heading text-xl text-white">{job.role}</h3>
-                  <span class="text-sm text-gray-400 flex-shrink-0 mt-1 sm:mt-0">
+              <div class="bg-gray-800/80 backdrop-blur-sm border-2 border-gray-600 rounded-lg p-4 md:p-6">
+                {/* FIX: This div is also responsive now */}
+                <div class="flex flex-col sm:flex-row justify-between sm:items-start mb-2">
+                  <h3 class="font-heading text-xl text-white mb-1 sm:mb-0">
+                    {job.role}
+                  </h3>
+                  <span class="text-sm text-gray-400 flex-shrink-0 mt-1 sm:mt-0 sm:ml-4">
                     {job.period}
                   </span>
                 </div>
