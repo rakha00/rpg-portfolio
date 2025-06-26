@@ -4,7 +4,7 @@ description: "A full-stack LMS built with Laravel 12, featuring manual authentic
 publishDate: "2025-06-26"
 tags: ["Laravel", "Full-Stack", "Blade", "AlpineJS", "Pest"]
 image: "/images/projects/skoolio.jpeg"
-siteUrl: ""
+siteUrl: "https://skoolio.rkhdnr.my.id/"
 repoUrl: "https://github.com/rakha00/Skoolio-Learning-Management-System"
 ---
 
